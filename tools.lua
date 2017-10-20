@@ -104,29 +104,3 @@ function fetch_v ( t,k )
 	return v
 end
 
-TAB_ENV2={
-	DEBUG_MODE =true,
-	LUA_VERSION="XXT",
-	SCRIPT_VERSION = "1.3.0",
---选区
-	STUDIO_PARA_DAQU= 25,
-
---换线
-	STUDIO_PARA_LINE = 4,
-
---交易坐标
-	STUDIO_PARA_XY = "367 440",
-
-
-	STUDIO_PARA_JUE_SE = 1,
-
---备用，买药间隔，调节买药速度,单位秒
-	STUDIO_PARA_BUY_TIME =1,
-
---画面静止检测的时间间隔--单位秒
-	STANDING_SECONDS= 5
-}
-
-function gettable_value(...)
-	return #TAB_ENV
-end

@@ -1,8 +1,5 @@
-init("com.tencent.smoba",1)
-initLog("wangzhe_log", 1)
-
-qq="3172507458"
-pwd="1234567890"
+--init("com.tencent.smoba",1)
+--initLog("wangzhe_log", 1)
 
 mSleep(1000)
 if  isFrontApp("com.tencent.smoba") == 0 then
