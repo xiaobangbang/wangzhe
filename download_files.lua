@@ -1,19 +1,33 @@
 require "socket"
 
 
-function download (host,file)
+function download22 (host,file)
 	local c = assert(socket.connect(host,80))
 	local count = 0
 	c:send("GET "..file.." Http/1.0\r\n\r\n")
 	while true do
 		local s, status, partial = receive(c)
+		dialog(status, 3)
+		dialog(s, 3)
+		
 		count = count+ #(s or partial)
 		if status == "closed" then break end
 
 	end
 	c:close()
-	print (file,count)
+	dialog (file,2)
+	mSleep(3000)
+	dialog (count,2)
 end
+
+
+
+function download (host,file)
+	
+	dialog (file,2)	
+	
+end
+
 
 function receive(connection)
 	connection:settimeout(0)
@@ -56,14 +70,14 @@ end
 
 --host ="http://localhost"
 
-host ="www.w3.org"
-get (host,"/TR/html401/html40.txt")
+host ="www.w3help.org"
+get (host,"/tomcat-9.0-doc/index.html")
 
---get (host,"/test4.php")
+get (host,"/tomcat-9.0-doc/security-manager-howto.html")
 
---get (host,"/test.html")
+get (host,"/tomcat-9.0-doc/introduction.html")
 
---get (host,"/check_box.html")
+get (host,"/zh-cn/home/glossary.html")
 
 dispatch()
 
