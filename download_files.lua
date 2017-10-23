@@ -84,36 +84,15 @@ end
 
 threads = {}
 
-function get (host,file)
-	if file=="1" then
+function setExeFunc (func_name)
+	
 		local co = coroutine.create(
 			function()
-				funct1(host,file)
-			end
-		)
-		table.insert(threads,co)
-	elseif file=="2" then
-		local co = coroutine.create(
-			function()
-				funct2(host,file)
-			end
-		)
-		table.insert(threads,co)
-	elseif file=="3" then
-		local co = coroutine.create(
-			function()
-				funct3(host,file)
+				f1 = load("return "..func_name.."()")
+				f1()
 			end
 		)
 		table.insert(threads,co)	
-	elseif file=="4" then
-		local co = coroutine.create(
-			function()
-				funct4(host,file)
-			end
-		)
-		table.insert(threads,co)	
-	end
 end
 
 function dispatch()
@@ -133,16 +112,16 @@ end
 host ="www.w3help.org"
 --get (host,"/tomcat-9.0-doc/index.html")
 
-get (host,"1")
+setExeFunc ("funct1")
 
 --get (host,"/tomcat-9.0-doc/security-manager-howto.html")
 
-get (host,"2")
+setExeFunc ("funct2")
 
 --get (host,"/tomcat-9.0-doc/introduction.html")
-get (host,"3")
+setExeFunc ("funct3")
 
-get (host,"4")
+setExeFunc ("funct4")
 
 --get (host,"/zh-cn/home/glossary.html")
 
