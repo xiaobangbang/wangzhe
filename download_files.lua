@@ -1,83 +1,150 @@
 require "socket"
+require("TSLib")
 
-
-function download22 (host,file)
-	local c = assert(socket.connect(host,80))
-	local count = 0
-	c:send("GET "..file.." Http/1.0\r\n\r\n")
-	while true do
-		local s, status, partial = receive(c)
-		dialog(status, 3)
-		dialog(s, 3)
-		
-		count = count+ #(s or partial)
-		if status == "closed" then break end
-
+function funct1(...)
+	-- body
+	local i = 1
+	while (true) do
+		-- body
+		i = i +1
+		nLog("func1"..tostring(i))
+		mSleep(1000)
+		if getRandomNum() %2 == 0 then
+			nLog ("coroutine.yield (func1)")
+			mSleep(1000)
+			coroutine.yield("func1")
+		end
+		nLog("return 1true")
 	end
-	c:close()
-	dialog (file,2)
-	mSleep(3000)
-	dialog (count,2)
+
 end
 
-
-
-function download (host,file)
-	
-	dialog (file,2)	
-	
-end
-
-
-function receive(connection)
-	connection:settimeout(0)
-	local s,status,partial = connection:receive(2^10)
-	if status == "timeout" then
-		print ("timeout")
-		coroutine.yield(connection)
+function funct2(...)
+	-- body
+	local i = 1
+	while (true) do
+		-- body
+		i = i +1
+		nLog("func2"..tostring(i))
+		mSleep(1000)
+		if getRandomNum() %3 == 0 then
+			nLog ("coroutine.yield (func2)")
+			mSleep(1000)
+			coroutine.yield("func2")
+		end
+		nLog("return 2true")
 	end
-	return s or partial,status
 end
+
+function funct3(...)
+	-- body
+	local i = 1
+	while (true) do
+		-- body
+		i = i +1
+		nLog("func3"..tostring(i))
+		mSleep(1000)
+		if getRandomNum() %5 == 0 then
+			nLog ("coroutine.yield (func3)")
+			mSleep(1000)
+			coroutine.yield("func3")
+		end
+		nLog("return 3true")
+	end
+end
+
+
+function funct4(...)
+	-- body
+	local i = 1
+	while (true) do
+		-- body
+		i = i +1
+		nLog("func4"..tostring(i))
+		mSleep(1000)
+		if getRandomNum() %6 == 0 then
+			nLog ("coroutine.yield (func4)")
+			mSleep(1000)
+			coroutine.yield("func4")
+		end
+		nLog("return 4true")
+	end
+end
+
+function getRandomNum(...)	
+	math.randomseed(tostring(os.time()):reverse():sub(1, 7))
+	local var1 = math.random(1,100) 		
+	return var1
+end
+
+--f1 = assert( load(" dialog2('sdfsd',2)"))
+--f1 = load(" dialog2('sdfsd',2)")
+
+--f1()
 
 threads = {}
 
 function get (host,file)
-	local co = coroutine.create(
-	function()
-		download(host,file)
+	if file=="1" then
+		local co = coroutine.create(
+			function()
+				funct1(host,file)
+			end
+		)
+		table.insert(threads,co)
+	elseif file=="2" then
+		local co = coroutine.create(
+			function()
+				funct2(host,file)
+			end
+		)
+		table.insert(threads,co)
+	elseif file=="3" then
+		local co = coroutine.create(
+			function()
+				funct3(host,file)
+			end
+		)
+		table.insert(threads,co)	
+	elseif file=="4" then
+		local co = coroutine.create(
+			function()
+				funct4(host,file)
+			end
+		)
+		table.insert(threads,co)	
 	end
-	)
-	table.insert(threads,co)
 end
 
 function dispatch()
 	local i = 1
 	while true do
-		if threads[i] == nil then
-			if threads[1] == nil then break end
-			i = 1
-		end
-		local status ,res = coroutine.resume( threads[i])
-		if not res then
-			--print(i)
-			table.remove(threads,i)
-		else
-			i = i+1
-			--print ("50 overtime"..i)
-		end
+		if i>4 then i  =1 end
+		mSleep(1000)
+		local retfunc,abc = coroutine.resume( threads[i])
+		nLog("return from yeild:"..tostring(retfunc)..abc)
+		i = i + 1
 	end
+	dialog("end dispatch",20)
 end
 
 --host ="http://localhost"
 
 host ="www.w3help.org"
-get (host,"/tomcat-9.0-doc/index.html")
+--get (host,"/tomcat-9.0-doc/index.html")
 
-get (host,"/tomcat-9.0-doc/security-manager-howto.html")
+get (host,"1")
 
-get (host,"/tomcat-9.0-doc/introduction.html")
+--get (host,"/tomcat-9.0-doc/security-manager-howto.html")
 
-get (host,"/zh-cn/home/glossary.html")
+get (host,"2")
+
+--get (host,"/tomcat-9.0-doc/introduction.html")
+get (host,"3")
+
+get (host,"4")
+
+--get (host,"/zh-cn/home/glossary.html")
 
 dispatch()
 
