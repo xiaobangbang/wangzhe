@@ -104,7 +104,46 @@ end
 
 --shake_screen()
 
-cor_pop_up1()
-mmsleep(3000)
-cor_pop_up1()
+--cor_pop_up1()
+--mmsleep(3000)
+--cor_pop_up1()
 
+
+dofile(iphone_path.."pick_color.lua")
+mmsleep(1000)
+
+list1= List.new()
+
+List.pushlast(list1,page_login_entrance.button_qq)
+
+--local first_value = List.getfirst(list1)
+
+--nLog(#first_value)
+
+List.pushlast(list1,page_login_auth_qq.button_login)
+
+--nLog(#first_value)
+
+--nLog(list1.last)
+
+
+for i =1, 20 do
+	-- body
+local first_value = List.getfirst(list1)
+local click_index = #first_value
+
+
+local click_xy = first_value[click_index] 
+local click_x = click_xy[1]
+local click_y = click_xy[2]
+if multiColor(first_value) then
+	nLog("click qq button")
+	
+	List.popfirst(list1)
+	--nLog(#List.getfirst(list1))
+	tap(click_x,  click_y)
+end 
+nLog(i)
+mmsleep(1000)
+
+end
