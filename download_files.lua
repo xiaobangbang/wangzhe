@@ -107,25 +107,12 @@ function dispatch()
 	dialog("end dispatch",20)
 end
 
---host ="http://localhost"
-
-host ="www.w3help.org"
---get (host,"/tomcat-9.0-doc/index.html")
-
 setExeFunc ("funct1")
-
---get (host,"/tomcat-9.0-doc/security-manager-howto.html")
 
 setExeFunc ("funct2")
 
---get (host,"/tomcat-9.0-doc/introduction.html")
 setExeFunc ("funct3")
 
 setExeFunc ("funct4")
 
---get (host,"/zh-cn/home/glossary.html")
-
 dispatch()
-
-
-
