@@ -222,3 +222,15 @@ function List.poplast(list)
 	list.last = last -1
 	return value
 end
+
+function getClickXY(color_arr)
+
+	local click_index = #color_arr
+
+
+	local click_xy = color_arr[click_index] 
+	local click_x = click_xy[1]
+	local click_y = click_xy[2]
+	return click_x,click_y
+	-- body
+end

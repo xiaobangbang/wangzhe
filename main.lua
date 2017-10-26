@@ -18,17 +18,17 @@ dofile(iphone_path.."pushover.lua")
 function set_jue_se(...)
 	wwlog("298 判断是否是仓库号")
 	mmsleep(100)	
-	
-		wwlog(tostring(var1.tianlei_flag))
-		var1.tianlei_flag = true
-		wwlog(tostring(var1.tianlei_flag))
-		var1.init_setup = true
-		fuli_flag = true
-		in_game = false
-		
-		var1.bag_is_ready = true
-		wwlog("340 是仓库号,直接去交易")
-	
+
+	wwlog(tostring(var1.tianlei_flag))
+	var1.tianlei_flag = true
+	wwlog(tostring(var1.tianlei_flag))
+	var1.init_setup = true
+	fuli_flag = true
+	in_game = false
+
+	var1.bag_is_ready = true
+	wwlog("340 是仓库号,直接去交易")
+
 	-- body
 end
 
@@ -83,7 +83,7 @@ record_var1(var1)
 
 co1 = coroutine.create( function() 
 		while true do
-		--for i = 1,2 do
+			--for i = 1,2 do
 			ttoast("before yield")
 			coroutine.yield("sdfsdfsfdsdf")
 			mmsleep(3000)
@@ -96,7 +96,7 @@ function cor_pop_up1()
 	if a then
 		ttoast(tostring(b))
 	end
-	
+
 	return b
 end
 
@@ -115,35 +115,59 @@ mmsleep(1000)
 list1= List.new()
 
 List.pushlast(list1,page_login_entrance.button_qq)
-
---local first_value = List.getfirst(list1)
-
---nLog(#first_value)
-
 List.pushlast(list1,page_login_auth_qq.button_login)
 
---nLog(#first_value)
 
---nLog(list1.last)
-
-
-for i =1, 20 do
+function task_by_loop(list1)
 	-- body
-local first_value = List.getfirst(list1)
-local click_index = #first_value
+	while (true) do
+		for k,v in pairs (list1) do
+			--print(k)
+			if k ~= 'first' and k ~= 'last' then
+				nLog("k:"..k)
+				if multiColor(v) then
+					nLog("multiColor(v)")			
+					local click_x,click_y = getClickXY(v)	
+					tap(click_x,  click_y)
+				end 
+				--print_r(v)
+			end
+			mSleep(1000)
+		end
+		mSleep(1000)
+	end
+end
 
+function  getListSize(list1)
+	-- body
+	--[[
+	local size =0
+	for k,v in pairs (list1) do		
+		if k ~= 'first' and k ~= 'last' then
+			size = size +1
+		end
+	end
+	return size
+	--]]
+	return list1.last + 1
+end	
 
-local click_xy = first_value[click_index] 
-local click_x = click_xy[1]
-local click_y = click_xy[2]
-if multiColor(first_value) then
-	nLog("click qq button")
-	
-	List.popfirst(list1)
-	--nLog(#List.getfirst(list1))
-	tap(click_x,  click_y)
-end 
-nLog(i)
-mmsleep(1000)
+function task_by_order(list1)
+	-- body	
+	--for i =1, getListSize(list1) do
+	while (true) do
+		-- body
+		local first_value = List.getfirst(list1)
 
+		local click_x,click_y = getClickXY(first_value)	
+		if multiColor(first_value) then
+			nLog("multiColor(first_value)")
+			List.popfirst(list1)			
+			tap(click_x,  click_y)
+		end
+		if getListSize(list1) == 0 then
+			break
+		end
+		mmsleep(1000)
+	end
 end
